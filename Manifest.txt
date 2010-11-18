@@ -1,8 +1,0 @@
-.autotest
-History.txt
-Manifest.txt
-README.txt
-Rakefile
-bin/rbdraw
-lib/rbdraw.rb
-test/test_rbdraw.rb

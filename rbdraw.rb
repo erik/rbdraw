@@ -1,4 +1,4 @@
-require 'rbdraw.so'
+require 'rbdraw'
 
 module Draw
   class Display
