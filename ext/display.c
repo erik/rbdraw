@@ -9,39 +9,47 @@ Display_t *DisplayNew(char *name) {
     return NULL;
   }
   int screen_num = DefaultScreen(display);
-
+  
+  disp_t->width = DisplayWidth(display, screen_num);
+  disp_t->height = DisplayHeight(display, screen_num);
   disp_t->display_name = name == NULL ? "default" : name;
   disp_t->display = display;
   disp_t->screen_num = screen_num;
+  disp_t->open = true;
 
-  return disp_t;
-  
+  return disp_t;  
 }
 
 void DisplayDispose(Display_t* disp) {
-  XFree(disp->display);
+  if(disp->open) {
+    XCloseDisplay(disp->display);
+  }
   free(disp);
   disp = NULL;
 }
 
 VALUE display_new(int argc, VALUE *args, VALUE self) {
-  char *name = argc == 1 ? RSTRING(args[0])->ptr : NULL;
+  char *name = argc == 1 ? RSTRING(args[0])->ptr : getenv("DISPLAY");
   Display_t* disp = DisplayNew(name);
   VALUE tdata = Data_Wrap_Struct(self, 0, DisplayDispose, disp);
 
-  char *dname = name != NULL ? name : "default";
+  char *dname = name != NULL ? name : getenv("DISPLAY");
   
-  VALUE argv[2];
+  VALUE argv[4];
   argv[0] = rb_str_new2(dname);
   argv[1] = INT2FIX(disp->screen_num);
+  argv[2] = INT2FIX(disp->width);
+  argv[3] = INT2FIX(disp->height);
 
-  rb_obj_call_init(tdata, 2, argv);
+  rb_obj_call_init(tdata, 4, argv);
   return tdata;
 }
 
 /* init vars and such */
-VALUE display_init(VALUE self, VALUE name, VALUE num) {
-  rb_iv_set(self, "@name", name);
-  rb_iv_set(self, "@screen_num", num);
+VALUE display_init(VALUE self, VALUE name, VALUE num, VALUE w, VALUE h) {
+  rb_ivar_set(self, rb_intern("@name"), name);
+  rb_ivar_set(self, rb_intern("@screen_num"), num);
+  rb_ivar_set(self, rb_intern("@width"), w);
+  rb_ivar_set(self, rb_intern("@height"), h);
   return self;
 }
