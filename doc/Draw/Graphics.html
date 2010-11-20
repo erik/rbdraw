@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Draw::Graphics</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../doc_c.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="doc.c">doc.c</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-new">::new</a></li>
+					
+					<li><a href="#method-i-font">#font</a></li>
+					
+					<li><a href="#method-i-point">#point</a></li>
+					
+					<li><a href="#method-i-sync">#sync</a></li>
+					
+					<li><a href="#method-i-sync_on_draw">#sync_on_draw</a></li>
+					
+					<li><a href="#method-i-text">#text</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../Draw.html">Draw</a></li>
+				
+					<li><a href="../Draw/Display.html">Draw::Display</a></li>
+				
+					<li><a href="../Draw/Graphics.html">Draw::Graphics</a></li>
+				
+					<li><a href="../Draw/Window.html">Draw::Window</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Draw::Graphics</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="method-c-new"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(...)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+can&#8217;t be called
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+VALUE graphics_new(int argc, VALUE* argv, VALUE self) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="font-method" class="method-detail ">
+				<a name="method-i-font"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">font(string) &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets the font of the <a href="Graphics.html">Graphics</a> object to the
+given name. The font name may contain wildcards,  specified by
+&#8217;*&#8217;
+</p>
+<pre>
+   g = some_window.create_graphics
+   # use a specific font
+   g.font 'lucidasans-14'
+   # use a wildcard font
+   g.font '*-helvetica-*-12-*'</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="font-source">
+<pre>
+VALUE select_font(VALUE self, VALUE font_name) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="point-method" class="method-detail ">
+				<a name="method-i-point"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">point(x, y) &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Draws a single pixel at the specified point.
+</p>
+<pre>
+   g = some_window.create_graphics
+   # draws a point at 10, 20
+   g.point(10, 20)</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="point-source">
+<pre>
+VALUE draw_point(VALUE self, VALUE r, VALUE c) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="sync-method" class="method-detail ">
+				<a name="method-i-sync"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">sync() &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Manually updates display, flushing any changes to the screen. This needs to
+be used if <a href="Graphics.html#method-i-sync_on_draw">sync_on_draw</a>
+is false
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="sync-source">
+<pre>
+VALUE graphics_sync(VALUE self) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="sync-on-draw-method" class="method-detail ">
+				<a name="method-i-sync_on_draw"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">sync_on_draw(bool) &rarr; true or false</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets whether the display will be updated each time it a draw function is
+called. If set to  false, the window will have to manually be updated with
+<a href="Graphics.html#method-i-sync">sync</a>. Allowd drawing to be
+completed faster for many draw functions.
+</p>
+<pre>
+   g = some_window.create_graphics
+   # turn off
+   g.sync_on_draw(false)
+   # do some drawing ...
+   #manually sync
+   g.sync
+   # turn back on
+   g.sync_on_draw(true)</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="sync-on-draw-source">
+<pre>
+VALUE sync_on_draw(VALUE self, VALUE b) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="text-method" class="method-detail ">
+				<a name="method-i-text"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">text(string, x, y)     &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Draws a string at the given location.
+</p>
+<pre>
+  g = some_window.create_graphics
+  # draw 'hello world' in the top left corner
+  g.text 'hello world', 0, 0</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="text-source">
+<pre>
+VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
+{
+  int x = FIX2INT(r);
+  int y = FIX2INT(c);
+  char* str = RSTRING(string)-&gt;ptr;
+  
+  Graphics_t *g;
+  Data_Get_Struct(self, Graphics_t, g);
+
+  XDrawString(g-&gt;disp-&gt;display, g-&gt;win-&gt;w,g-&gt;context, x, y, str, strlen(str));
+  if(g-&gt;sync_on_draw) {
+    XSync(g-&gt;disp-&gt;display, False);
+  }
+  
+  return Qnil;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
