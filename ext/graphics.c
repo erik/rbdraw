@@ -25,7 +25,7 @@ Graphics_t *GraphicsNew(Window_t *win) {
   }
 
   g->context = gc;
-  
+  g->sync_on_draw = true;
   return g;
 }
 
@@ -48,7 +48,9 @@ VALUE draw_point(VALUE self, VALUE r, VALUE c) {
   Data_Get_Struct(self, Graphics_t, g);
   
   XDrawPoint(g->disp->display, g->win->w, g->context, x, y);  
-  XSync(g->disp->display, False);
+  if(g->sync_on_draw) {
+    XSync(g->disp->display, False);
+  }
   
   return Qnil;
 }
@@ -62,7 +64,9 @@ VALUE draw_text(VALUE self, VALUE string, VALUE r, VALUE c) {
   Data_Get_Struct(self, Graphics_t, g);
 
   XDrawString(g->disp->display, g->win->w,g->context, x, y, str, strlen(str));
-  XSync(g->disp->display, False);
+  if(g->sync_on_draw) {
+    XSync(g->disp->display, False);
+  }
   
   return Qnil;
 }
@@ -84,3 +88,31 @@ VALUE select_font(VALUE self, VALUE font_name) {
   return Qnil;
 }
 
+VALUE sync_on_draw(VALUE self, VALUE b) {
+  bool flag;
+  switch(TYPE(b)) {
+    case T_FALSE:
+    case T_NIL:
+      flag = false;
+      break;
+    default:
+      flag = true;
+      break;
+  }
+
+  Graphics_t* g;
+  Data_Get_Struct(self, Graphics_t, g);
+  
+  g->sync_on_draw = flag;
+  
+  return flag? Qtrue : Qfalse;
+    
+}
+
+VALUE graphics_sync(VALUE self) {
+  Graphics_t* g;
+  Data_Get_Struct(self, Graphics_t, g);
+  
+  XSync(g->disp->display, False);
+  return Qnil;
+}

@@ -28,22 +28,8 @@ void Init_rbdraw() {
       rb_define_method(cGraphics, "point", draw_point, 2);
       rb_define_method(cGraphics, "text", draw_text, 3);
       rb_define_method(cGraphics, "font", select_font, 1);
+      rb_define_method(cGraphics, "sync_on_draw", sync_on_draw, 1);
+      rb_define_method(cGraphics, "sync", graphics_sync, 0);
 
   XInitThreads();
 }
-
-/* Class Heirarchy --
-    -- Draw:Module
-        -- Display: Class
-            -- new(name = 'null') -- XOpenDisplay
-            -- close -- XCloseDisplay
-            -- int height -- DisplayHeight
-            -- int width -- DisplayWidth
-        -- Window: Class
-            -- new (display = Display.default) -- XCreateSimpleWindow
-            -- Graphics create_graphics -- XDefaultGC
-            -- close -- XDestroyWindow
-        -- Graphics: Class -- GC
-            -- new() -- raise error
-*/
-
