@@ -16,7 +16,17 @@ void WindowDispose(Window_t* win) {
   DisplayDispose(win->disp);
   win = NULL;
 }
-
+/*
+ * call-seq: 
+ *   new (display)    -> Window,
+ *   new ()           -> Window
+ *
+ * Creates a new Window object. Can be called with 
+ * either one or zero arguments. The argument is 
+ * expected to be an object of the Display class.
+ * If not provided, it will default to the default
+ * Display.
+ */
 VALUE window_new(int argc, VALUE* argv, VALUE self) {
   Window_t* win;
   Display_t* d;
@@ -25,8 +35,7 @@ VALUE window_new(int argc, VALUE* argv, VALUE self) {
       win = WindowNew(DisplayNew(getenv("DISPLAY")));
       break;
     case 1:
-      /* TODO: this fails hard */
-      Data_Get_Struct(self, Display_t, d);
+      Data_Get_Struct(argv[0], Display_t, d);
       win = WindowNew(d);
       break;
     default:
@@ -42,13 +51,20 @@ VALUE window_new(int argc, VALUE* argv, VALUE self) {
   rb_obj_call_init(tdata, 2, args);
   return tdata;
 }
-
+/* :nodoc: */
 VALUE window_init(VALUE self, VALUE width, VALUE height) {
   rb_ivar_set(self, rb_intern("@width"), width);
   rb_ivar_set(self, rb_intern("@height"), height);
   return self;
 }
 
+/*
+ * call-seq: show() -> nil
+ *
+ * Draws the window to the screen, raising an
+ * error if the window's Display has already
+ * been closed.
+ */
 VALUE window_show(VALUE self) {
   Window_t* win;
   Data_Get_Struct(self, Window_t, win);
@@ -75,6 +91,14 @@ VALUE window_show(VALUE self) {
   return Qnil;
 }
 
+/*
+ * call-seq: hide() -> false or true
+ * 
+ * Hides the window. Doesn't close anything, just
+ * removes it from the screen. Returns true if
+ * removed from the screen and false if the 
+ * window's Display has been closed
+ */
 VALUE window_hide(VALUE self) {
   Window_t *win;
   Data_Get_Struct(self, Window_t, win);
@@ -88,6 +112,13 @@ VALUE window_hide(VALUE self) {
   return Qtrue;
 }
 
+/*
+ * call-seq: create_graphics() -> Graphics
+ *
+ * Creates a Graphics object for the Window, 
+ * which can be used for drawing on the 
+ * window
+ */
 VALUE create_graphics(VALUE self) {
   Window_t *win;
   Graphics_t* g;

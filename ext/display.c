@@ -29,6 +29,14 @@ void DisplayDispose(Display_t* disp) {
   }
 }
 
+/*
+ * call-seq: new(name = getenv("DISPLAY")) -> Display
+ *
+ * Creates a new Display object. Can be called with
+ * either one or no arguments to represent the name
+ * of the X server to connect to. With no args, it
+ * will connect to the default display
+ */
 VALUE display_new(int argc, VALUE *args, VALUE self) {
   char *name = argc == 1 ? RSTRING(args[0])->ptr : getenv("DISPLAY");
   Display_t* disp = DisplayNew(name);
@@ -46,7 +54,7 @@ VALUE display_new(int argc, VALUE *args, VALUE self) {
   return tdata;
 }
 
-/* init vars and such */
+/* :nodoc: */
 VALUE display_init(VALUE self, VALUE name, VALUE num, VALUE w, VALUE h) {
   rb_ivar_set(self, rb_intern("@name"), name);
   rb_ivar_set(self, rb_intern("@screen_num"), num);
@@ -55,6 +63,14 @@ VALUE display_init(VALUE self, VALUE name, VALUE num, VALUE w, VALUE h) {
   return self;
 }
 
+/*
+ * call-seq: close() -> true
+ *
+ * Closes the display, preventing further usage
+ * and ending the connection to the X server.
+ * if the display is already closed, this will
+ * raise an error
+ */
 VALUE display_close(VALUE self) {
   Display_t* disp;
   Data_Get_Struct(self, Display_t, disp);

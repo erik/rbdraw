@@ -35,12 +35,23 @@ void GraphicsDispose(Graphics_t *g) {
   g = NULL;
 }
 
+/*
+ * can't be called
+ */
 VALUE graphics_new(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eRuntimeError, "can't call new for Graphics class");
   return Qnil;
 }
 
-// TODO: allow calling without XSync (makes everything slow)
+/*
+ * call-seq: point(x, y) -> nil
+ *
+ * Draws a single pixel at the specified point.
+ * 
+ *    g = some_window.create_graphics
+ *    # draws a point at 10, 20
+ *    g.point(10, 20)
+ */
 VALUE draw_point(VALUE self, VALUE r, VALUE c) {
   int x = FIX2INT(r);
   int y = FIX2INT(c);
@@ -55,7 +66,17 @@ VALUE draw_point(VALUE self, VALUE r, VALUE c) {
   return Qnil;
 }
 
-VALUE draw_text(VALUE self, VALUE string, VALUE r, VALUE c) {
+/*
+ * call-seq: text(string, x, y)     -> nil
+ *
+ * Draws a string at the given location.
+ *
+ *   g = some_window.create_graphics
+ *   # draw 'hello world' in the top left corner
+ *   g.text 'hello world', 0, 0
+ */
+VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
+{
   int x = FIX2INT(r);
   int y = FIX2INT(c);
   char* str = RSTRING(string)->ptr;
@@ -71,6 +92,20 @@ VALUE draw_text(VALUE self, VALUE string, VALUE r, VALUE c) {
   return Qnil;
 }
 
+
+/*
+ * call-seq: font(string) -> nil 
+ *
+ * Sets the font of the Graphics object to the given
+ * name. The font name may contain wildcards, 
+ * specified by '*'
+ *
+ *    g = some_window.create_graphics
+ *    # use a specific font
+ *    g.font 'lucidasans-14'
+ *    # use a wildcard font
+ *    g.font '*-helvetica-*-12-*'
+ */
 VALUE select_font(VALUE self, VALUE font_name) {
   char *fontstr = RSTRING(font_name)->ptr;
   Graphics_t* g;
@@ -88,6 +123,24 @@ VALUE select_font(VALUE self, VALUE font_name) {
   return Qnil;
 }
 
+/*
+ * call-seq: sync_on_draw(bool) -> true or false
+ *
+ * Sets whether the display will be updated each
+ * time it a draw function is called. If set to 
+ * false, the window will have to manually be updated
+ * with #sync. Allowd drawing to be completed
+ * faster for many draw functions.
+ *
+ *    g = some_window.create_graphics
+ *    # turn off
+ *    g.sync_on_draw(false)
+ *    # do some drawing ...
+ *    #manually sync
+ *    g.sync
+ *    # turn back on
+ *    g.sync_on_draw(true)
+ */
 VALUE sync_on_draw(VALUE self, VALUE b) {
   bool flag;
   switch(TYPE(b)) {
@@ -109,6 +162,13 @@ VALUE sync_on_draw(VALUE self, VALUE b) {
     
 }
 
+/*
+ * call-seq: sync() -> nil
+ * 
+ * Manually updates display, flushing any
+ * changes to the screen. This needs to 
+ * be used if #sync_on_draw is false
+ */
 VALUE graphics_sync(VALUE self) {
   Graphics_t* g;
   Data_Get_Struct(self, Graphics_t, g);
