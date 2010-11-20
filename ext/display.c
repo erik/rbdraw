@@ -53,3 +53,19 @@ VALUE display_init(VALUE self, VALUE name, VALUE num, VALUE w, VALUE h) {
   rb_ivar_set(self, rb_intern("@height"), h);
   return self;
 }
+
+VALUE display_close(VALUE self) {
+  Display_t* disp;
+  Data_Get_Struct(self, Display_t, disp);
+  
+  if(!disp->open) {
+    rb_raise(rb_eRuntimeError, "display already closed");
+    return Qnil;
+  }
+  
+  XCloseDisplay(disp->display);
+  disp->open = false;
+
+  return Qtrue;
+
+}

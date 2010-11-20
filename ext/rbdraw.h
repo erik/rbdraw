@@ -33,6 +33,8 @@ typedef struct {
 
 /* Graphics */
 typedef struct {
+  Display_t* disp;
+  Window_t* win;
   GC context;
 } Graphics_t;
 
@@ -41,14 +43,18 @@ Display_t *DisplayNew(char* name);
 void DisplayDispose(Display_t *rec);
 VALUE display_init(VALUE, VALUE, VALUE, VALUE, VALUE);
 VALUE display_new(int, VALUE*, VALUE);
+VALUE display_close(VALUE);
 
 Window_t *WindowNew(Display_t* disp);
 void WindowDispose(Window_t* win);
 VALUE window_new(int, VALUE*, VALUE);
 VALUE window_init(VALUE, VALUE, VALUE);
 VALUE window_show(VALUE);
+VALUE window_hide(VALUE);
+VALUE create_graphics(VALUE);
 
-Graphics_t *GraphicsNew(Window_t win);
-void GraphicsDispose(Window_t *win);
+Graphics_t *GraphicsNew(Window_t *win);
+void GraphicsDispose(Graphics_t *win);
+VALUE graphics_new(int, VALUE*, VALUE);
 #endif /* _RBDRAW_H_ */
 

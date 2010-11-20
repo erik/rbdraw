@@ -71,3 +71,26 @@ VALUE window_show(VALUE self) {
 
   return Qnil;
 }
+
+VALUE window_hide(VALUE self) {
+  Window_t *win;
+  Data_Get_Struct(self, Window_t, win);
+  if(!win->disp->open) {
+    return Qfalse;
+  }
+  
+  XUnmapWindow(win->disp->display, win->w);
+  XFlush(win->disp->display);
+  
+  return Qtrue;
+}
+
+VALUE create_graphics(VALUE self) {
+  Window_t *win;
+  Graphics_t* g;
+  Data_Get_Struct(self, Window_t, win);
+  
+  g = GraphicsNew(win);
+  return Data_Wrap_Struct(cGraphics, 0, GraphicsDispose, g);
+}
+  
