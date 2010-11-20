@@ -1,41 +1,18 @@
 # rbdraw
 
-* FIX (url)
-
 ## DESCRIPTION:
 
-FIX (describe your package)
-
-## FEATURES/PROBLEMS:
-
-* FIX (list of features or problems)
+rbdraw is a 2D drawing library for Ruby. It works by wrapping some standard X11
+functions into an easier to work with way.
 
 ## SYNOPSIS:
 
-  FIX (code sample of usage)
-
-## REQUIREMENTS:
-
-* FIX (list of requirements)
-
-## INSTALL:
-
-* FIX (sudo gem install, anything else)
-
-## DEVELOPERS:
-
-After checking out the source, run:
-
-  $ rake newb
-
-This task will install any missing dependencies, run the tests/specs,
-and generate the RDoc.
+Check out the file 'test.rb' for some small examples of how to use
+rbdraw. More examples will be added as rbdraw gets more features.
 
 ## LICENSE:
 
-(The MIT License)
-
-Copyright (c) 2010 FIX
+Copyright (c) 2010 Erik Price
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
