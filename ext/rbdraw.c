@@ -19,13 +19,15 @@ void Init_rbdraw() {
       rb_define_method(cWindow, "initialize", window_init, 2);
       rb_define_method(cWindow, "show", window_show, 0);
       rb_define_method(cWindow, "hide", window_hide, 0);
-      rb_define_method(cWindow, "create_graphics", create_graphics, 0);
+      rb_define_method(cWindow, "graphics", create_graphics, 0);
         rb_define_attr(cWindow, "width", 1, 1);
 	rb_define_attr(cWindow, "height", 1, 1);
   /* Graphics */
     cGraphics = rb_define_class_under(mDraw, "Graphics", rb_cObject);
       rb_define_singleton_method(cGraphics, "new", graphics_new, -1);
-
+      rb_define_method(cGraphics, "point", draw_point, 2);
+      rb_define_method(cGraphics, "text", draw_text, 3);
+      rb_define_method(cGraphics, "font", select_font, 1);
 
   XInitThreads();
 }

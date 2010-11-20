@@ -28,6 +28,7 @@ typedef struct {
   Display_t* disp;
   unsigned int width, height;
   int x_pos, y_pos;
+  bool created;
 } Window_t;
 
 
@@ -35,6 +36,7 @@ typedef struct {
 typedef struct {
   Display_t* disp;
   Window_t* win;
+  XFontStruct* font;
   GC context;
 } Graphics_t;
 
@@ -56,5 +58,8 @@ VALUE create_graphics(VALUE);
 Graphics_t *GraphicsNew(Window_t *win);
 void GraphicsDispose(Graphics_t *win);
 VALUE graphics_new(int, VALUE*, VALUE);
+VALUE draw_point(VALUE, VALUE, VALUE);
+VALUE draw_text(VALUE, VALUE, VALUE, VALUE);
+VALUE select_font(VALUE, VALUE);
 #endif /* _RBDRAW_H_ */
 

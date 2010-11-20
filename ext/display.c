@@ -21,11 +21,12 @@ Display_t *DisplayNew(char *name) {
 }
 
 void DisplayDispose(Display_t* disp) {
-  if(disp->open) {
-    XCloseDisplay(disp->display);
+  if(disp) {
+    if(disp->open) {
+      XCloseDisplay(disp->display);
+    }
+    disp = NULL;
   }
-  free(disp);
-  disp = NULL;
 }
 
 VALUE display_new(int argc, VALUE *args, VALUE self) {

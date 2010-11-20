@@ -8,12 +8,12 @@ Window_t *WindowNew(Display_t* disp) {
   win->height = disp->height;
   win->x_pos = disp->width / 2;
   win->y_pos = disp->height / 2;
+  win->created = false;
   return win;
 }
 
 void WindowDispose(Window_t* win) {
   DisplayDispose(win->disp);
-  free(win);
   win = NULL;
 }
 
@@ -60,12 +60,15 @@ VALUE window_show(VALUE self) {
   }
   
   Display_t* disp = win->disp;
-
-  win->w = XCreateSimpleWindow(disp->display, RootWindow(disp->display, \
-							 disp->screen_num),
-			       win->x_pos, win->y_pos, win->width, win->height,
-			       0, BlackPixel(disp->display, disp->screen_num),
-			       WhitePixel(disp->display, disp->screen_num));
+  
+  if(!win->created) {
+    win->w = XCreateSimpleWindow(disp->display, RootWindow(disp->display, \
+							   disp->screen_num),
+				 win->x_pos, win->y_pos, win->width, win->height,
+				 0, BlackPixel(disp->display, disp->screen_num),
+				 WhitePixel(disp->display, disp->screen_num)); 
+    win->created = true;
+  }
   XMapWindow(disp->display, win->w);
   XFlush(disp->display);
 
