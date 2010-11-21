@@ -33,10 +33,8 @@ g.sync_on_draw false
 puts "Switching to color: #{ g.color 255, 0, 0}"
 
 puts "Drawing some stripes"
-(0..w.height).each {|y|
-  (0..w.width). select {|x| x.even? }.each {|x|
-    g.point x, y
-  }
+(0..w.width). select {|x| x % 10 == 0 }.each {|x|
+    g.line x, 0, x, w.height
 }
 
 g.sync

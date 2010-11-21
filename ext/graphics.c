@@ -67,6 +67,32 @@ VALUE draw_point(VALUE self, VALUE r, VALUE c) {
 }
 
 /*
+ * call-seq: line(bx, by, ex, ey) -> nil
+ * 
+ * Creates a line from the point (bx, by) to (ex, ey)
+ *
+ *    g = some_window.create_graphics
+ *    # draw a line from the top left to bottom right
+ *    g.line(0,0, some_window.width, some_window.height
+ */
+VALUE draw_line(VALUE self, VALUE begx, VALUE begy, VALUE endx, VALUE endy) {
+  int bx, by, ex, ey;
+  bx = FIX2INT(begx);
+  by = FIX2INT(begy);
+  ex = FIX2INT(endx);
+  ey = FIX2INT(endy);
+  
+  Graphics_t *g;
+  Data_Get_Struct(self, Graphics_t, g);
+
+  XDrawLine(g->disp->display, g->win->w, g->context, bx, by, ex, ey);
+  if(g->sync_on_draw) {
+    XSync(g->disp->display, False);
+  }
+  return Qnil;
+}
+
+/*
  * call-seq: text(string, x, y)     -> nil
  *
  * Draws a string at the given location.

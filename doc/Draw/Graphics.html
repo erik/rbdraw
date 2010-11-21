@@ -71,7 +71,11 @@
 					
 					<li><a href="#method-c-new">::new</a></li>
 					
+					<li><a href="#method-i-color">#color</a></li>
+					
 					<li><a href="#method-i-font">#font</a></li>
+					
+					<li><a href="#method-i-line">#line</a></li>
 					
 					<li><a href="#method-i-point">#point</a></li>
 					
@@ -191,6 +195,39 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) </pre>
 			<h3 class="section-header">Public Instance Methods</h3>
 
 		
+			<div id="color-method" class="method-detail ">
+				<a name="method-i-color"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">color(r, g, b) &rarr; RGB value</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets the RGB color value for subsequent drawing functions. Returns a string
+containing the compiled RGB value in the form #RRGGBB
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="color-source">
+<pre>
+VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
 			<div id="font-method" class="method-detail ">
 				<a name="method-i-font"></a>
 
@@ -221,6 +258,42 @@ given name. The font name may contain wildcards,  specified by
 						id="font-source">
 <pre>
 VALUE select_font(VALUE self, VALUE font_name) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="line-method" class="method-detail ">
+				<a name="method-i-line"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">line(bx, by, ex, ey) &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a line from the point (bx, by) to (ex, ey)
+</p>
+<pre>
+   g = some_window.create_graphics
+   # draw a line from the top left to bottom right
+   g.line(0,0, some_window.width, some_window.height(</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="line-source">
+<pre>
+VALUE draw_line(VALUE self, VALUE begx, VALUE begy, VALUE endx, VALUE endy) </pre>
 					</div>
 					
 				</div>

@@ -60,6 +60,7 @@ Graphics_t *GraphicsNew(Window_t *win);
 void GraphicsDispose(Graphics_t *win);
 VALUE graphics_new(int, VALUE*, VALUE);
 VALUE draw_point(VALUE, VALUE, VALUE);
+VALUE draw_line(VALUE, VALUE, VALUE, VALUE, VALUE);
 VALUE draw_text(VALUE, VALUE, VALUE, VALUE);
 VALUE select_font(VALUE, VALUE);
 VALUE sync_on_draw(VALUE, VALUE);

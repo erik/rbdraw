@@ -34,6 +34,7 @@ void Init_rbdraw() {
     cGraphics = rb_define_class_under(mDraw, "Graphics", rb_cObject);
       rb_define_singleton_method(cGraphics, "new", graphics_new, -1);
       rb_define_method(cGraphics, "point", draw_point, 2);
+      rb_define_method(cGraphics, "line", draw_line, 4);
       rb_define_method(cGraphics, "text", draw_text, 3);
       rb_define_method(cGraphics, "font", select_font, 1);
       rb_define_method(cGraphics, "sync_on_draw", sync_on_draw, 1);
