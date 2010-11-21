@@ -39,7 +39,18 @@ void DisplayDispose(Display_t* disp) {
  * will connect to the default display
  */
 VALUE display_new(int argc, VALUE *args, VALUE self) {
-  char *name = argc == 1 ? RSTRING(args[0])->ptr : getenv("DISPLAY");
+  char *name;
+  switch(argc) {
+    case 0:
+      name = getenv("DISPLAY");
+      break;
+    case 1:
+      name = RSTRING_PTR(args[0]);
+      break;
+    default:
+      rb_raise(rb_eRuntimeError, "Wrong number of arguments, %d for 0 or 1", argc);
+      return Qnil;
+  }
   Display_t* disp = DisplayNew(name);
   VALUE tdata = Data_Wrap_Struct(self, 0, DisplayDispose, disp);
 
