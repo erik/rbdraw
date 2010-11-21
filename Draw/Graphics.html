@@ -71,6 +71,10 @@
 					
 					<li><a href="#method-c-new">::new</a></li>
 					
+					<li><a href="#method-i-circle">#circle</a></li>
+					
+					<li><a href="#method-i-clear">#clear</a></li>
+					
 					<li><a href="#method-i-color">#color</a></li>
 					
 					<li><a href="#method-i-font">#font</a></li>
@@ -195,6 +199,74 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) </pre>
 			<h3 class="section-header">Public Instance Methods</h3>
 
 		
+			<div id="circle-method" class="method-detail ">
+				<a name="method-i-circle"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">circle(x, y, diameter) &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Draws a circle with a center of (x, y) and a diameter of diameter
+</p>
+<pre>
+   g = some_window.graphics
+   # draw a circle at 100, 100, with a diameter of 20
+   g.circle(100, 100, 20)</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="circle-source">
+<pre>
+VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="clear-method" class="method-detail ">
+				<a name="method-i-clear"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">clear() &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Clears the window, leaving just the background color
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="clear-source">
+<pre>
+VALUE graphics_clear(VALUE self) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
 			<div id="color-method" class="method-detail ">
 				<a name="method-i-color"></a>
 
@@ -246,7 +318,7 @@ given name. The font name may contain wildcards,  specified by
 &#8217;*&#8217;
 </p>
 <pre>
-   g = some_window.create_graphics
+   g = some_window.graphics
    # use a specific font
    g.font 'lucidasans-14'
    # use a wildcard font
@@ -284,7 +356,7 @@ VALUE select_font(VALUE self, VALUE font_name) </pre>
 Creates a line from the point (bx, by) to (ex, ey)
 </p>
 <pre>
-   g = some_window.create_graphics
+   g = some_window.graphics
    # draw a line from the top left to bottom right
    g.line(0,0, some_window.width, some_window.height</pre>
 					
@@ -320,7 +392,7 @@ VALUE draw_line(VALUE self, VALUE begx, VALUE begy, VALUE endx, VALUE endy) </pr
 Draws a single pixel at the specified point.
 </p>
 <pre>
-   g = some_window.create_graphics
+   g = some_window.graphics
    # draws a point at 10, 20
    g.point(10, 20)</pre>
 					
@@ -393,7 +465,7 @@ called. If set to  false, the window will have to manually be updated with
 completed faster for many draw functions.
 </p>
 <pre>
-   g = some_window.create_graphics
+   g = some_window.graphics
    # turn off
    g.sync_on_draw(false)
    # do some drawing ...
@@ -434,7 +506,7 @@ VALUE sync_on_draw(VALUE self, VALUE b) </pre>
 Draws a string at the given location.
 </p>
 <pre>
-  g = some_window.create_graphics
+  g = some_window.graphics
   # draw 'hello world' in the top left corner
   g.text 'hello world', 0, 0</pre>
 					
@@ -447,7 +519,7 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
 {
   int x = FIX2INT(r);
   int y = FIX2INT(c);
-  char* str = RSTRING(string)-&gt;ptr;
+  char* str = RSTRING_PTR(string);
   
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
