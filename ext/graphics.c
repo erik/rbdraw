@@ -105,7 +105,7 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
 {
   int x = FIX2INT(r);
   int y = FIX2INT(c);
-  char* str = RSTRING(string)->ptr;
+  char* str = RSTRING_PTR(string);
   
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
@@ -133,7 +133,7 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
  *    g.font '*-helvetica-*-12-*'
  */
 VALUE select_font(VALUE self, VALUE font_name) {
-  char *fontstr = RSTRING(font_name)->ptr;
+  char *fontstr = RSTRING_PTR(font_name);
   Graphics_t* g;
 
   Data_Get_Struct(self, Graphics_t, g);

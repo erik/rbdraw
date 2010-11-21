@@ -286,7 +286,7 @@ Creates a line from the point (bx, by) to (ex, ey)
 <pre>
    g = some_window.create_graphics
    # draw a line from the top left to bottom right
-   g.line(0,0, some_window.width, some_window.height(</pre>
+   g.line(0,0, some_window.width, some_window.height</pre>
 					
 
 					
@@ -447,7 +447,7 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
 {
   int x = FIX2INT(r);
   int y = FIX2INT(c);
-  char* str = RSTRING(string)-&gt;ptr;
+  char* str = RSTRING_PTR(string);
   
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
