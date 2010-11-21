@@ -21,12 +21,13 @@ Display_t *DisplayNew(char *name) {
 }
 
 void DisplayDispose(Display_t* disp) {
-  if(disp) {
+  // TODO: Segfault on XCloseDisplay here...
+  /* if(disp) {
     if(disp->open) {
       XCloseDisplay(disp->display);
     }
     disp = NULL;
-  }
+    }*/
 }
 
 /*

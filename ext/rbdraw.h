@@ -64,5 +64,6 @@ VALUE draw_text(VALUE, VALUE, VALUE, VALUE);
 VALUE select_font(VALUE, VALUE);
 VALUE sync_on_draw(VALUE, VALUE);
 VALUE graphics_sync(VALUE);
+VALUE graphics_color(VALUE, VALUE, VALUE, VALUE);
 #endif /* _RBDRAW_H_ */
 

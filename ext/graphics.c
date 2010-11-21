@@ -176,3 +176,41 @@ VALUE graphics_sync(VALUE self) {
   XSync(g->disp->display, False);
   return Qnil;
 }
+
+/*
+ * call-seq: color(r, g, b) -> RGB value
+ * 
+ * Sets the RGB color value for subsequent drawing
+ * functions. Returns a string containing the
+ * compiled RGB value in the form #RRGGBB
+ */
+VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
+  Graphics_t *g;
+  Data_Get_Struct(self, Graphics_t, g);
+  
+  unsigned int red = FIX2INT(r);
+  unsigned int green = FIX2INT(gr);
+  unsigned int blue = FIX2INT(b);
+
+#define OUTOFBOUNDS(color) if(color > 255 || color < 0) { \
+    rb_raise(rb_eRuntimeError, "Invalid RGB value: %d, %d, %d", red, green, blue); }
+
+  OUTOFBOUNDS(red);
+  OUTOFBOUNDS(green);
+  OUTOFBOUNDS(blue);
+
+#undef OUTOFBOUNDS
+
+  Colormap cmap;
+  XColor c0, c1;
+  cmap = DefaultColormap(g->disp->display, 0);
+  
+  char* colorfmt = malloc(20);
+  sprintf(colorfmt, "#%02x%02x%02x", red, green, blue);
+
+  XAllocNamedColor(g->disp->display, cmap, colorfmt, &c1, &c0);
+  XSetForeground(g->disp->display, g->context, c1.pixel);
+
+  return rb_str_new2(colorfmt);
+  
+}

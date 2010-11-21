@@ -30,6 +30,8 @@ gets
 #faster drawing
 g.sync_on_draw false
 
+puts "Switching to color: #{ g.color 255, 0, 0}"
+
 puts "Drawing some stripes"
 (0..w.height).each {|y|
   (0..w.width). select {|x| x.even? }.each {|x|

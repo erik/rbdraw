@@ -38,6 +38,7 @@ void Init_rbdraw() {
       rb_define_method(cGraphics, "font", select_font, 1);
       rb_define_method(cGraphics, "sync_on_draw", sync_on_draw, 1);
       rb_define_method(cGraphics, "sync", graphics_sync, 0);
+      rb_define_method(cGraphics, "color", graphics_color, 3);
 
   XInitThreads();
 }
