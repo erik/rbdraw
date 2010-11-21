@@ -35,11 +35,13 @@ void Init_rbdraw() {
       rb_define_singleton_method(cGraphics, "new", graphics_new, -1);
       rb_define_method(cGraphics, "point", draw_point, 2);
       rb_define_method(cGraphics, "line", draw_line, 4);
+      rb_define_method(cGraphics, "circle", draw_circle, 3);
       rb_define_method(cGraphics, "text", draw_text, 3);
       rb_define_method(cGraphics, "font", select_font, 1);
       rb_define_method(cGraphics, "sync_on_draw", sync_on_draw, 1);
       rb_define_method(cGraphics, "sync", graphics_sync, 0);
       rb_define_method(cGraphics, "color", graphics_color, 3);
+      rb_define_method(cGraphics, "clear", graphics_clear, 0);
 
   XInitThreads();
 }

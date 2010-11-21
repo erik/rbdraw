@@ -61,10 +61,12 @@ void GraphicsDispose(Graphics_t *win);
 VALUE graphics_new(int, VALUE*, VALUE);
 VALUE draw_point(VALUE, VALUE, VALUE);
 VALUE draw_line(VALUE, VALUE, VALUE, VALUE, VALUE);
+VALUE draw_circle(VALUE, VALUE, VALUE, VALUE);
 VALUE draw_text(VALUE, VALUE, VALUE, VALUE);
 VALUE select_font(VALUE, VALUE);
 VALUE sync_on_draw(VALUE, VALUE);
 VALUE graphics_sync(VALUE);
 VALUE graphics_color(VALUE, VALUE, VALUE, VALUE);
+VALUE graphics_clear(VALUE);
 #endif /* _RBDRAW_H_ */
 

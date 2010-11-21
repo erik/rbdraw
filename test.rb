@@ -1,4 +1,6 @@
-require 'rbdraw.so'
+$LOAD_PATH << '.' # because Ruby 1.9 is dumb 
+
+require 'rbdraw'
 
 d = Draw::Display.new
 puts "#{d.name} #{d.screen_num} #{d.width}x#{d.height}"
@@ -25,6 +27,11 @@ puts "Drawing 1000 random points"
   g.point x, y
 }
 print ">"
+gets
+
+puts "Clearing screen"
+g.clear
+print '>'
 gets
 
 #faster drawing

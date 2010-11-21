@@ -48,7 +48,7 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) {
  *
  * Draws a single pixel at the specified point.
  * 
- *    g = some_window.create_graphics
+ *    g = some_window.graphics
  *    # draws a point at 10, 20
  *    g.point(10, 20)
  */
@@ -71,7 +71,7 @@ VALUE draw_point(VALUE self, VALUE r, VALUE c) {
  * 
  * Creates a line from the point (bx, by) to (ex, ey)
  *
- *    g = some_window.create_graphics
+ *    g = some_window.graphics
  *    # draw a line from the top left to bottom right
  *    g.line(0,0, some_window.width, some_window.height
  */
@@ -97,7 +97,7 @@ VALUE draw_line(VALUE self, VALUE begx, VALUE begy, VALUE endx, VALUE endy) {
  *
  * Draws a string at the given location.
  *
- *   g = some_window.create_graphics
+ *   g = some_window.graphics
  *   # draw 'hello world' in the top left corner
  *   g.text 'hello world', 0, 0
  */
@@ -126,7 +126,7 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
  * name. The font name may contain wildcards, 
  * specified by '*'
  *
- *    g = some_window.create_graphics
+ *    g = some_window.graphics
  *    # use a specific font
  *    g.font 'lucidasans-14'
  *    # use a wildcard font
@@ -158,7 +158,7 @@ VALUE select_font(VALUE self, VALUE font_name) {
  * with #sync. Allowd drawing to be completed
  * faster for many draw functions.
  *
- *    g = some_window.create_graphics
+ *    g = some_window.graphics
  *    # turn off
  *    g.sync_on_draw(false)
  *    # do some drawing ...
@@ -239,4 +239,46 @@ VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
 
   return rb_str_new2(colorfmt);
   
+}
+
+/*
+ * call-seq: clear() -> nil
+ *
+ * Clears the window, leaving just the background color
+ */
+VALUE graphics_clear(VALUE self) {
+  Graphics_t *g;
+  Data_Get_Struct(self, Graphics_t, g);
+  
+  XClearWindow(g->disp->display, g->win->w);
+  XFlush(g->disp->display);
+  return Qnil;
+}
+
+/*
+ * call-seq: circle(x, y, diameter) -> nil
+ *
+ * Draws a circle with a center of (x, y) and
+ * a diameter of diameter
+ *
+ *    g = some_window.graphics
+ *    # draw a circle at 100, 100, with a diameter of 20
+ *    g.circle(100, 100, 20)
+ */
+VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) {
+  int x = FIX2INT(xpos);
+  int y = FIX2INT(ypos);
+  int d = FIX2INT(diam);
+
+  Graphics_t *g;
+  Data_Get_Struct(self, Graphics_t, g);
+  
+  XFillArc(g->disp->display, g->win->w, g->context,
+	   x - (d / 2), y - (d / 2), d, d, 0, 360 * 64);
+
+  if(g->sync_on_draw) {
+    XSync(g->disp->display, False);
+  }
+  
+  return Qnil;
 }
