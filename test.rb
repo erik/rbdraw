@@ -14,6 +14,7 @@ w.show
 
 g = w.graphics
 
+
 puts "Drawing 'hello world' to the screen in Lucidasans-14..."
 g.font "lucidasans-14"
 g.text "hello world", w.width/2, w.height/2
@@ -51,3 +52,4 @@ gets
 
 w.hide
 d.close
+

@@ -21,4 +21,6 @@ red.line 0, 0, 150, 150
 green.line 0, 150, 150, 0
 blue.line 0, 75, 150, 75
 
+
 gets
+

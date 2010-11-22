@@ -2,7 +2,7 @@ require 'rbdraw'
 include Draw
 
 class Ball
-  @@diameter = 10
+  @@diameter = 40
   @@gravity = -0.7
   @@xaccel = 0.0
   @@yaccel = 0.3
@@ -51,31 +51,32 @@ win.height = $h
 win.show
 
 g = win.graphics
-
 g.sync_on_draw false
 
 loop do
-  # about every 20 frames add a new ball
-  if rand(10) == 2
-    $balls << Ball.new(rand($w), rand(40) + 10, 0)
-  end
-  $balls = $balls.select {|ball|
-    ball.alive?
-  }
-  $balls.collect {|ball|
-    if ball.y > win.height - ball.d
-      ball.bounce
-      ball.move
+  g.buffer {|buff|
+    # about every 10 frames add a new ball
+    if rand(10) == 2
+      $balls << Ball.new(rand($w), rand(40) + 10, 0)
     end
-    l = 255 - ball.life
-    g.color(l, l, l)
-    ball.move
-    g.circle ball.x, ball.y, ball.d
-    ball
+    $balls = $balls.select {|ball|
+      ball.alive?
+    }
+    $balls.collect {|ball|
+      if ball.y > win.height - ball.d
+        ball.bounce
+        ball.move
+      end
+      l = 255 - ball.life
+      buff.color(l, l, l)
+      ball.move
+      buff.circle ball.x, ball.y, ball.d
+      ball
+    }
+    sleep(0.05)
+    g.clear
   }
-  g.sync
-  sleep(0.05)
-  g.clear
 end
 
 win.hide
+

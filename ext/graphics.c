@@ -2,10 +2,10 @@
 
 Graphics_t *GraphicsNew(Window_t *win) {
   Graphics_t *g = malloc(sizeof(Graphics_t));
-  
+
   g->disp = win->disp;
   g->win = win;
-  
+
   XGCValues values;
   unsigned long valuemask = 0;
 
@@ -15,8 +15,8 @@ Graphics_t *GraphicsNew(Window_t *win) {
   GC gc = XCreateGC(d, w, valuemask, &values);
   XSetFillStyle(d, gc, FillSolid);
   XSetLineAttributes(d, gc, 2, LineSolid, CapRound, JoinRound);
-  XSetBackground(d, gc, BlackPixel(d, win->disp->screen_num));
-  
+  XSetBackground(d, gc, WhitePixel(d, win->disp->screen_num));
+
   XSync(d, False);
 
   if(gc < 0) {
@@ -47,7 +47,7 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) {
  * call-seq: point(x, y) -> nil
  *
  * Draws a single pixel at the specified point.
- * 
+ *
  *    g = some_window.graphics
  *    # draws a point at 10, 20
  *    g.point(10, 20)
@@ -57,18 +57,18 @@ VALUE draw_point(VALUE self, VALUE r, VALUE c) {
   int y = FIX2INT(c);
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
-  
-  XDrawPoint(g->disp->display, g->win->w, g->context, x, y);  
+
+  XDrawPoint(g->disp->display, g->win->w, g->context, x, y);
   if(g->sync_on_draw) {
     XSync(g->disp->display, False);
   }
-  
+
   return Qnil;
 }
 
 /*
  * call-seq: line(bx, by, ex, ey) -> nil
- * 
+ *
  * Creates a line from the point (bx, by) to (ex, ey)
  *
  *    g = some_window.graphics
@@ -81,7 +81,7 @@ VALUE draw_line(VALUE self, VALUE begx, VALUE begy, VALUE endx, VALUE endy) {
   by = FIX2INT(begy);
   ex = FIX2INT(endx);
   ey = FIX2INT(endy);
-  
+
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
 
@@ -106,7 +106,7 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
   int x = FIX2INT(r);
   int y = FIX2INT(c);
   char* str = RSTRING_PTR(string);
-  
+
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
 
@@ -114,16 +114,16 @@ VALUE draw_text(VALUE self,VALUE string, VALUE r, VALUE c)
   if(g->sync_on_draw) {
     XSync(g->disp->display, False);
   }
-  
+
   return Qnil;
 }
 
 
 /*
- * call-seq: font(string) -> nil 
+ * call-seq: font(string) -> nil
  *
  * Sets the font of the Graphics object to the given
- * name. The font name may contain wildcards, 
+ * name. The font name may contain wildcards,
  * specified by '*'
  *
  *    g = some_window.graphics
@@ -153,7 +153,7 @@ VALUE select_font(VALUE self, VALUE font_name) {
  * call-seq: sync_on_draw(bool) -> true or false
  *
  * Sets whether the display will be updated each
- * time it a draw function is called. If set to 
+ * time it a draw function is called. If set to
  * false, the window will have to manually be updated
  * with #sync. Allowd drawing to be completed
  * faster for many draw functions.
@@ -181,31 +181,31 @@ VALUE sync_on_draw(VALUE self, VALUE b) {
 
   Graphics_t* g;
   Data_Get_Struct(self, Graphics_t, g);
-  
+
   g->sync_on_draw = flag;
-  
+
   return flag? Qtrue : Qfalse;
-    
+
 }
 
 /*
  * call-seq: sync() -> nil
- * 
+ *
  * Manually updates display, flushing any
- * changes to the screen. This needs to 
+ * changes to the screen. This needs to
  * be used if #sync_on_draw is false
  */
 VALUE graphics_sync(VALUE self) {
   Graphics_t* g;
   Data_Get_Struct(self, Graphics_t, g);
-  
+
   XSync(g->disp->display, False);
   return Qnil;
 }
 
 /*
  * call-seq: color(r, g, b) -> RGB value
- * 
+ *
  * Sets the RGB color value for subsequent drawing
  * functions. Returns a string containing the
  * compiled RGB value in the form #RRGGBB
@@ -213,7 +213,7 @@ VALUE graphics_sync(VALUE self) {
 VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
-  
+
   unsigned int red = FIX2INT(r);
   unsigned int green = FIX2INT(gr);
   unsigned int blue = FIX2INT(b);
@@ -230,7 +230,7 @@ VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
   Colormap cmap;
   XColor c0, c1;
   cmap = DefaultColormap(g->disp->display, 0);
-  
+
   char* colorfmt = malloc(20);
   sprintf(colorfmt, "#%02x%02x%02x", red, green, blue);
 
@@ -238,7 +238,7 @@ VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
   XSetForeground(g->disp->display, g->context, c1.pixel);
 
   return rb_str_new2(colorfmt);
-  
+
 }
 
 /*
@@ -249,7 +249,7 @@ VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
 VALUE graphics_clear(VALUE self) {
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
-  
+
   XClearWindow(g->disp->display, g->win->w);
   XFlush(g->disp->display);
   return Qnil;
@@ -272,13 +272,65 @@ VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) {
 
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
-  
+
   XFillArc(g->disp->display, g->win->w, g->context,
 	   x - (d / 2), y - (d / 2), d, d, 0, 360 * 64);
 
   if(g->sync_on_draw) {
     XSync(g->disp->display, False);
   }
-  
+
   return Qnil;
 }
+
+/*
+ * call-seq: buffer() { |obj| block } -> nil
+ *
+ * WARNING: BROKEN!
+ * Expects a block parameter, performs draw
+ * functions called in body on a separate
+ * buffer which is drawn to the window
+ * at the end of the block
+ *
+ *    g = some_window.graphics
+ *    g.buffer {|buff|
+ *      buff.point 10, 10
+ *      # ...
+ *    }
+ */
+VALUE buffer_do(VALUE self) {
+  /* TODO: Fixme! */
+  if(!rb_block_given_p()) {
+    rb_raise(rb_eRuntimeError, "no block given");
+    return self;
+  }
+
+  Graphics_t *g;
+  Pixmap buffer;
+  Data_Get_Struct(self, Graphics_t, g);
+
+  Display *display = g->disp->display;
+  int width = g->win->width;
+  int height = g->win->height;
+  Window win = g->win->w;
+
+  buffer = XCreatePixmap(display, win, width, height,
+			 DefaultDepth(display, g->disp->screen_num));
+
+  Window_t *w = malloc(sizeof(Window_t));
+  w->disp = g->disp;
+  w->width = width;
+  w->height = height;
+  w->w = buffer;
+  Graphics_t *buffg = GraphicsNew(w);
+
+  rb_yield(Data_Wrap_Struct(cGraphics, 0, GraphicsDispose, buffg));
+
+  XCopyArea(display, buffg->win->w, g->win->w, g->context,
+   	    0, 0, width, height, 0, 0);
+  XFreePixmap(display, buffer);
+
+  XFlush(buffg->disp->display);
+  return Qnil;
+}
+

@@ -42,6 +42,7 @@ void Init_rbdraw() {
       rb_define_method(cGraphics, "sync", graphics_sync, 0);
       rb_define_method(cGraphics, "color", graphics_color, 3);
       rb_define_method(cGraphics, "clear", graphics_clear, 0);
+      rb_define_method(cGraphics, "buffer", buffer_do, 0);
 
   XInitThreads();
 }

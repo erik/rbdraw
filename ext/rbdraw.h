@@ -68,5 +68,6 @@ VALUE sync_on_draw(VALUE, VALUE);
 VALUE graphics_sync(VALUE);
 VALUE graphics_color(VALUE, VALUE, VALUE, VALUE);
 VALUE graphics_clear(VALUE);
+VALUE buffer_do(VALUE);
 #endif /* _RBDRAW_H_ */
 
