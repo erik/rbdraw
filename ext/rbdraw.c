@@ -12,7 +12,15 @@ void Init_rbdraw() {
    * License:: Distributed under the MIT License
    */
   VALUE mDraw = rb_define_module("Draw");
-  /* Display */
+  /* 
+   * Document-class: Draw::Display
+   *
+   * This class handles the connection to the X server.
+   * Chances are you won't need to touch this at all, 
+   * since Draw::Window.new can be called without a 
+   * Display parameter, and will default to the one you'll
+   * most likely want to use anyway.
+   */
     cDisplay = rb_define_class_under(mDraw, "Display", rb_cObject);
       rb_define_singleton_method(cDisplay, "new", display_new, -1);
       rb_define_method(cDisplay, "initialize", display_init, 4);
@@ -21,7 +29,14 @@ void Init_rbdraw() {
 	rb_define_attr(cDisplay, "screen_num", 1, 0);
 	rb_define_attr(cDisplay, "width", 1, 0);
 	rb_define_attr(cDisplay, "height", 1, 0);
-  /* Window */
+  /* 
+   * Document-class: Draw::Window
+   *
+   * This class handles the actual, visual window that
+   * appears on the screen. There isn't really all
+   * that much to do here, besides create the graphics
+   * and resize the window
+   */
     cWindow = rb_define_class_under(mDraw, "Window", rb_cObject);
       rb_define_singleton_method(cWindow, "new", window_new, -1);
       rb_define_method(cWindow, "initialize", window_init, 2);
@@ -30,7 +45,14 @@ void Init_rbdraw() {
       rb_define_method(cWindow, "graphics", create_graphics, 0);
         rb_define_attr(cWindow, "width", 1, 1);
 	rb_define_attr(cWindow, "height", 1, 1);
-    /* Graphics */
+    /* Document-class: Draw::Graphics
+     *
+     * This is the most important part of the library,
+     * as it is what makes drawing on the window possible.
+     * A Graphics object cannot be instantiated directly,
+     * but must instead be created by a Draw::Window's 
+     * #graphics method.
+     */
     cGraphics = rb_define_class_under(mDraw, "Graphics", rb_cObject);
       rb_define_singleton_method(cGraphics, "new", graphics_new, -1);
       rb_define_method(cGraphics, "point", draw_point, 2);

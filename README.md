@@ -3,7 +3,7 @@
 ## DESCRIPTION:
 
 rbdraw is a 2D drawing library for Ruby. It works by wrapping
- some standard X11 functions into an easier to work with way.
+some standard X11 functions into an easier to work with way.
 
 To compile and use rbdraw, clone this repository, and then
 run `rake make build` to generate a Makefile and build.

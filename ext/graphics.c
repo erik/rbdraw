@@ -285,8 +285,8 @@ VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) {
 }
 
 /*
- * call-seq: buffer() { |obj| block } -> 
- *9
+ * call-seq: buffer() { |obj| block } ->  nil
+ *
  * Expects a block parameter, performs draw
  * functions called in body on a separate
  * buffer which is drawn to the window

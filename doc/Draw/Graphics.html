@@ -147,7 +147,13 @@
 		<h1 class="class">Draw::Graphics</h1>
 
 		<div id="description">
-			
+			<p>
+This is the most important part of the library, as it is what makes drawing
+on the window possible. A <a href="Graphics.html">Graphics</a> object
+cannot be instantiated directly, but must instead be created by a
+Draw::Window&#8217;s  graphics method.
+</p>
+
 		</div>
 
 		<!-- Constants -->
@@ -206,12 +212,7 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) </pre>
 
 				<div class="method-heading">
 				
-					<span class="method-callseq">buffer() { |obj| block } &rarr; 
-9
-Expects a block parameter, performs draw
-functions called in body on a separate
-buffer which is drawn to the window
-at the end of the block</span>
+					<span class="method-callseq">buffer() { |obj| block } &rarr;  nil</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
@@ -219,15 +220,15 @@ at the end of the block</span>
 				<div class="method-description">
 					
 					<p>
-g = some_window.graphics g.buffer {|buff|
+Expects a block parameter, performs draw functions called in body on a
+separate buffer which is drawn to the window at the end of the block
 </p>
 <pre>
-  buff.point 10, 10
-  # ...
-</pre>
-<p>
-}
-</p>
+   g = some_window.graphics
+   g.buffer {|buff|
+     buff.point 10, 10
+     # ...
+   }</pre>
 					
 
 					
