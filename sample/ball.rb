@@ -51,7 +51,7 @@ win.height = $h
 win.show
 
 g = win.graphics
-g.sync_on_draw false
+#g.sync_on_draw false
 
 loop do
   g.buffer {|buff|
@@ -67,15 +67,15 @@ loop do
         ball.bounce
         ball.move
       end
-      l = 255 - ball.life
+      l = (255 - ball.life).abs
       buff.color(l, l, l)
       ball.move
       buff.circle ball.x, ball.y, ball.d
       ball
     }
-    sleep(0.05)
-    g.clear
+   # buff.sync
   }
+  sleep(0.05)
 end
 
 win.hide

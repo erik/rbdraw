@@ -206,7 +206,12 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) </pre>
 
 				<div class="method-heading">
 				
-					<span class="method-callseq">buffer() { |obj| block } &rarr; nil</span>
+					<span class="method-callseq">buffer() { |obj| block } &rarr; 
+9
+Expects a block parameter, performs draw
+functions called in body on a separate
+buffer which is drawn to the window
+at the end of the block</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
@@ -214,16 +219,15 @@ VALUE graphics_new(int argc, VALUE* argv, VALUE self) </pre>
 				<div class="method-description">
 					
 					<p>
-WARNING: BROKEN! Expects a block parameter, performs draw functions called
-in body on a separate buffer which is drawn to the window at the end of the
-block
+g = some_window.graphics g.buffer {|buff|
 </p>
 <pre>
-   g = some_window.graphics
-   g.buffer {|buff|
-     buff.point 10, 10
-     # ...
-   }</pre>
+  buff.point 10, 10
+  # ...
+</pre>
+<p>
+}
+</p>
 					
 
 					

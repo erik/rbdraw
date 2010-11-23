@@ -15,7 +15,8 @@ Graphics_t *GraphicsNew(Window_t *win) {
   GC gc = XCreateGC(d, w, valuemask, &values);
   XSetFillStyle(d, gc, FillSolid);
   XSetLineAttributes(d, gc, 2, LineSolid, CapRound, JoinRound);
-  XSetBackground(d, gc, WhitePixel(d, win->disp->screen_num));
+  /* XSetBackground(d, gc, WhitePixel(d, win->disp->screen_num));
+     XSetForeground(d, gc, BlackPixel(d, win->disp->screen_num));*/
 
   XSync(d, False);
 
@@ -284,9 +285,8 @@ VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) {
 }
 
 /*
- * call-seq: buffer() { |obj| block } -> nil
- *
- * WARNING: BROKEN!
+ * call-seq: buffer() { |obj| block } -> 
+ *9
  * Expects a block parameter, performs draw
  * functions called in body on a separate
  * buffer which is drawn to the window
@@ -299,7 +299,6 @@ VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) {
  *    }
  */
 VALUE buffer_do(VALUE self) {
-  /* TODO: Fixme! */
   if(!rb_block_given_p()) {
     rb_raise(rb_eRuntimeError, "no block given");
     return self;
@@ -309,6 +308,17 @@ VALUE buffer_do(VALUE self) {
   Pixmap buffer;
   Data_Get_Struct(self, Graphics_t, g);
 
+  {
+    Colormap cmap;
+    XColor c0, c1;
+    cmap = DefaultColormap(g->disp->display, 0);
+    
+    XAllocNamedColor(g->disp->display, cmap, "#000000", &c1, &c0);
+    XSetBackground(g->disp->display, g->context, c1.pixel);
+    XAllocNamedColor(g->disp->display, cmap, "#FFFFFF", &c1, &c0);
+    XSetForeground(g->disp->display, g->context, c1.pixel);
+  }
+
   Display *display = g->disp->display;
   int width = g->win->width;
   int height = g->win->height;
@@ -316,6 +326,8 @@ VALUE buffer_do(VALUE self) {
 
   buffer = XCreatePixmap(display, win, width, height,
 			 DefaultDepth(display, g->disp->screen_num));
+
+  XFillRectangle(display, buffer, g->context, 0, 0, width, height);
 
   Window_t *w = malloc(sizeof(Window_t));
   w->disp = g->disp;
@@ -326,11 +338,14 @@ VALUE buffer_do(VALUE self) {
 
   rb_yield(Data_Wrap_Struct(cGraphics, 0, GraphicsDispose, buffg));
 
-  XCopyArea(display, buffg->win->w, g->win->w, g->context,
+  XCopyArea(display, buffer, g->win->w, g->context,
    	    0, 0, width, height, 0, 0);
+  
   XFreePixmap(display, buffer);
+  WindowDispose(w);
+  GraphicsDispose(buffg);
 
-  XFlush(buffg->disp->display);
+  XFlush(display);
   return Qnil;
 }
 
