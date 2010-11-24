@@ -205,40 +205,61 @@ VALUE graphics_sync(VALUE self) {
 }
 
 /*
- * call-seq: color(r, g, b) -> RGB value
+ * call-seq: 
+ *    color(r, g, b) -> RGB value
+ *    color(rgb) -> RGB value
  *
  * Sets the RGB color value for subsequent drawing
- * functions. Returns a string containing the
- * compiled RGB value in the form #RRGGBB
+ * functions. If passing a single RGB value, it 
+ * should be in the form 0xRRGGBB. Returns a string
+ * containing the compiled RGB value in the 
+ * form #RRGGBB.
+ * 
+ *    g = some_window.graphics
+ *    # set color to red
+ *    g.color(255, 0, 0)
+ *    # equivalent way to set color
+ *    # Also sets color to red
+ *    g.color(0xFF0000)
  */
-VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) {
+VALUE graphics_color(int argc, VALUE* args, VALUE self) {
   Graphics_t *g;
   Data_Get_Struct(self, Graphics_t, g);
 
-  unsigned int red = FIX2INT(r);
-  unsigned int green = FIX2INT(gr);
-  unsigned int blue = FIX2INT(b);
+  switch(argc) {
+    case 1:
+      XSetForeground(g->disp->display, g->context, FIX2INT(args[0]));
+      return FIX2INT(args[0]);
+    case 3: {
+      unsigned int red = FIX2INT(args[0]);
+      unsigned int green = FIX2INT(args[1]);
+      unsigned int blue = FIX2INT(args[2]);
 
-#define OUTOFBOUNDS(color) if(color > 255 || color < 0) { \
-    rb_raise(rb_eRuntimeError, "Invalid RGB value: %d, %d, %d", red, green, blue); }
+#define OUTOFBOUNDS(color) if(color > 255 || color < 0) {		\
+	rb_raise(rb_eRuntimeError, "Invalid RGB value: %d, %d, %d", red, green, blue); }
 
-  OUTOFBOUNDS(red);
-  OUTOFBOUNDS(green);
-  OUTOFBOUNDS(blue);
+      OUTOFBOUNDS(red);
+      OUTOFBOUNDS(green);
+      OUTOFBOUNDS(blue);
 
 #undef OUTOFBOUNDS
 
-  Colormap cmap;
-  XColor c0, c1;
-  cmap = DefaultColormap(g->disp->display, 0);
+      Colormap cmap;
+      XColor c0, c1;
+      cmap = DefaultColormap(g->disp->display, 0);
 
-  char* colorfmt = malloc(20);
-  sprintf(colorfmt, "#%02x%02x%02x", red, green, blue);
+      char* colorfmt = malloc(20);
+      sprintf(colorfmt, "#%02x%02x%02x", red, green, blue);
+      
+      XAllocNamedColor(g->disp->display, cmap, colorfmt, &c1, &c0);
+      XSetForeground(g->disp->display, g->context, c1.pixel);
+      return rb_str_new2(colorfmt);
+    }
+    default:
+      rb_raise(rb_eRuntimeError, "wrong number of arguments, %d for 1 or 3", argc);
+      return Qnil;
 
-  XAllocNamedColor(g->disp->display, cmap, colorfmt, &c1, &c0);
-  XSetForeground(g->disp->display, g->context, c1.pixel);
-
-  return rb_str_new2(colorfmt);
+  }
 
 }
 

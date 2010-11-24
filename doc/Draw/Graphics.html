@@ -321,7 +321,8 @@ VALUE graphics_clear(VALUE self) </pre>
 
 				<div class="method-heading">
 				
-					<span class="method-callseq">color(r, g, b) &rarr; RGB value</span>
+					<span class="method-callseq">color(r, g, b) &rarr; RGB value
+color(rgb) &rarr; RGB value</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
@@ -329,16 +330,24 @@ VALUE graphics_clear(VALUE self) </pre>
 				<div class="method-description">
 					
 					<p>
-Sets the RGB color value for subsequent drawing functions. Returns a string
-containing the compiled RGB value in the form #RRGGBB
+Sets the RGB color value for subsequent drawing functions. If passing a
+single RGB value, it  should be in the form 0xRRGGBB. Returns a string
+containing the compiled RGB value in the  form #RRGGBB.
 </p>
+<pre>
+   g = some_window.graphics
+   # set color to red
+   g.color(255, 0, 0)
+   # equivalent way to set color
+   # Also sets color to red
+   g.color(0xFF0000)</pre>
 					
 
 					
 					<div class="method-source-code"
 						id="color-source">
 <pre>
-VALUE graphics_color(VALUE self, VALUE r, VALUE gr, VALUE b) </pre>
+VALUE graphics_color(int argc, VALUE* args, VALUE self) </pre>
 					</div>
 					
 				</div>
