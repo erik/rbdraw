@@ -285,6 +285,33 @@ VALUE draw_circle(VALUE self, VALUE xpos, VALUE ypos, VALUE diam) {
 }
 
 /*
+ * call-seq: rect(x, y, width, height) -> nil
+ *
+ * Creates a rectangle. (x, y) represents
+ * the top left corner of the rectangle, 
+ * and width and height are obviously the
+ * width and height of it
+ */
+VALUE draw_rect(VALUE self, VALUE x1, VALUE y1, VALUE w1, VALUE h1) {
+  int x = FIX2INT(x1);
+  int y = FIX2INT(y1);
+  int w = FIX2INT(w1);
+  int h = FIX2INT(h1);
+
+  Graphics_t *g;
+  Data_Get_Struct(self, Graphics_t, g);
+  
+  XFillRectangle(g->disp->display, g->win->w, g->context, x, y, w, h);
+  
+  if(g->sync_on_draw) {
+    XSync(g->disp->display, False);
+  }
+
+  return Qnil;
+}
+
+
+/*
  * call-seq: buffer() { |obj| block } ->  nil
  *
  * Expects a block parameter, performs draw

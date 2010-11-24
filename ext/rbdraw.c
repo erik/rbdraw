@@ -45,7 +45,8 @@ void Init_rbdraw() {
       rb_define_method(cWindow, "graphics", create_graphics, 0);
         rb_define_attr(cWindow, "width", 1, 1);
 	rb_define_attr(cWindow, "height", 1, 1);
-    /* Document-class: Draw::Graphics
+    /* 
+     *Document-class: Draw::Graphics
      *
      * This is the most important part of the library,
      * as it is what makes drawing on the window possible.
@@ -58,6 +59,7 @@ void Init_rbdraw() {
       rb_define_method(cGraphics, "point", draw_point, 2);
       rb_define_method(cGraphics, "line", draw_line, 4);
       rb_define_method(cGraphics, "circle", draw_circle, 3);
+      rb_define_method(cGraphics, "rect", draw_rect, 4);
       rb_define_method(cGraphics, "text", draw_text, 3);
       rb_define_method(cGraphics, "font", select_font, 1);
       rb_define_method(cGraphics, "sync_on_draw", sync_on_draw, 1);

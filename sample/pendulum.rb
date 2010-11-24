@@ -25,8 +25,8 @@ loop do
   angle_vel += angle_accel * dt
   angle += angle_vel * dt
   g.buffer do |buff|
-    buff.color 25, 0, 255
-    buff.line 0, $height / 4, $width, $height /4
+    buff.color 80, 80, 80
+    buff.rect 0, 0, $width, $height / 4
     buff.color 0, 0, 0
     anchor_x = $width / 2
     anchor_y = $height / 4
