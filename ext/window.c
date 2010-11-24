@@ -127,4 +127,3 @@ VALUE create_graphics(VALUE self) {
   g = GraphicsNew(win);
   return Data_Wrap_Struct(cGraphics, 0, GraphicsDispose, g);
 }
-  

@@ -85,6 +85,8 @@
 					
 					<li><a href="#method-i-point">#point</a></li>
 					
+					<li><a href="#method-i-rect">#rect</a></li>
+					
 					<li><a href="#method-i-sync">#sync</a></li>
 					
 					<li><a href="#method-i-sync_on_draw">#sync_on_draw</a></li>
@@ -449,6 +451,39 @@ Draws a single pixel at the specified point.
 						id="point-source">
 <pre>
 VALUE draw_point(VALUE self, VALUE r, VALUE c) </pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="rect-method" class="method-detail ">
+				<a name="method-i-rect"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">rect(x, y, width, height) &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a rectangle. (x, y) represents the top left corner of the
+rectangle,  and width and height are obviously the width and height of it
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="rect-source">
+<pre>
+VALUE draw_rect(VALUE self, VALUE x1, VALUE y1, VALUE w1, VALUE h1) </pre>
 					</div>
 					
 				</div>

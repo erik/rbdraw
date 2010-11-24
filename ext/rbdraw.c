@@ -46,7 +46,7 @@ void Init_rbdraw() {
         rb_define_attr(cWindow, "width", 1, 1);
 	rb_define_attr(cWindow, "height", 1, 1);
     /* 
-     *Document-class: Draw::Graphics
+     * Document-class: Draw::Graphics
      *
      * This is the most important part of the library,
      * as it is what makes drawing on the window possible.
